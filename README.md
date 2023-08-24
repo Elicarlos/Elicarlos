@@ -1,17 +1,18 @@
-## Ola! Eu sou Elicarlos Ferreira
-- 🔭 Hoje trabalho com backend
-- 🌱 Estudando node.js
-- 😄 Pronouns:Ele/Dele
+# Elicarlos Ferreira
+<p>Olá, seja bem-vindo ao meu perfil! Meu nome é Elicarlos Ferreira e sou apaixonado por tecnologia, café e rock 'n' roll. Com uma carreira de 10 anos na área de Tecnologia da Informação, e nos últimos 3 anos focado em desenvolvimento, estou sempre em busca de novos desafios e oportunidades para expandir meus horizontes.</p>
 
-- <div style="display: inline_block"><br>
-  <img align="center" alt="Rafa-Js" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg">
-  <img align="center" alt="Rafa-Ts" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-plain.svg">
-  <img align="center" alt="Rafa-React" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg">
-  <img align="center" alt="Rafa-HTML" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg">
-  <img align="center" alt="Rafa-CSS" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg">
-  <img align="center" alt="Rafa-Python" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg">
-  <img align="center" alt="Rafa-Csharp" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg">
-</div>
+## Conecte-se comigo
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-000?style=for-the-badge&logo=linkedin&logoColor=0E76A8)](https://www.linkedin.com/in/elicarlos-ferreira-723661168/)
+[![Instagram](https://img.shields.io/badge/Instagram-000?style=for-the-badge&logo=instagram)](https://www.instagram.com/elicarlos_ferreira/)
+
+## Habilidades
+![C](https://img.shields.io/badge/C-000?style=for-the-badge&logo=c)
+![Python](https://img.shields.io/badge/Python-000?style=for-the-badge&logo=python)
+![Java](https://img.shields.io/badge/Java-000?style=for-the-badge&logo=java)
+![JavaScript](https://img.shields.io/badge/JavaScript-000?style=for-the-badge&logo=javascript)
+![HTML5](https://img.shields.io/badge/HTML5-000?style=for-the-badge&logo=html5)
+![CSS3](https://img.shields.io/badge/CSS3-000?style=for-the-badge&logo=css3&logoColor=264CE4)
+
   
   ##
 <!--
