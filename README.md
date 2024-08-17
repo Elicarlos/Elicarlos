@@ -6,8 +6,16 @@
 [![Instagram](https://img.shields.io/badge/Instagram-000?style=for-the-badge&logo=instagram)](https://www.instagram.com/elicarlos_ferreira/)
 
 
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=Elicarlos&show_icons=true&theme=highcontrast&include_all_commits=true)
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Elicarlos&show_icons=true&theme=highcontrast)](https://github.com/anuraghazra/github-readme-stats)
+<table>
+  <tr>
+    <td>
+      <img src="https://github-readme-stats.vercel.app/api?username=Elicarlos&show_icons=true&theme=highcontrast&include_all_commits=true" alt="GitHub Stats">
+    </td>
+    <td>
+      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Elicarlos&show_icons=true&theme=highcontrast" alt="Top Langs">
+    </td>
+  </tr>
+</table>
 
 
 ## Habilidades
