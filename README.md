@@ -7,6 +7,7 @@
 
 ## Teste
 ![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=Elicarlos&show_icons=true&theme=highcontrast&include_all_commits=true)
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Elicarlos&show_icons=true&theme=highcontrast)](https://github.com/anuraghazra/github-readme-stats)
 
 
 ## Habilidades
