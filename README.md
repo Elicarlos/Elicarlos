@@ -8,10 +8,10 @@
 
 <table>
   <tr>
-    <td>
+    <td valign="top">
       <img src="https://github-readme-stats.vercel.app/api?username=Elicarlos&show_icons=true&theme=highcontrast&include_all_commits=true" alt="GitHub Stats">
     </td>
-    <td>
+    <td valign="top">
       <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Elicarlos&show_icons=true&theme=highcontrast" alt="Top Langs">
     </td>
   </tr>
