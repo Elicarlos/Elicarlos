@@ -5,6 +5,10 @@
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-000?style=for-the-badge&logo=linkedin&logoColor=0E76A8)](https://www.linkedin.com/in/elicarlos-ferreira-723661168/)
 [![Instagram](https://img.shields.io/badge/Instagram-000?style=for-the-badge&logo=instagram)](https://www.instagram.com/elicarlos_ferreira/)
 
+## Teste
+![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=Joaosantos&show_icons=true&theme=highcontrast&include_all_commits=true)
+
+
 ## Habilidades
 ![C](https://img.shields.io/badge/C-000?style=for-the-badge&logo=c)
 ![Python](https://img.shields.io/badge/Python-000?style=for-the-badge&logo=python)
