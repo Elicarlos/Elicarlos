@@ -30,7 +30,9 @@
 ![Next.js](https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=next.js&logoColor=white)
 
 ## 🐍 Snake comendo meus commits
-![Snake animation](https://raw.githubusercontent.com/SEU_USUARIO/SEU_REPO/output/github-snake-light.svg)
+
+<!-- Tema Light (clássico claro) -->
+![Snake animation](https://raw.githubusercontent.com/Elicarlos/output/github-snake-light.svg)
 
 <div align="center">
   
