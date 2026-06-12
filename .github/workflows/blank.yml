@@ -32,10 +32,6 @@ on:
       - '.github/workflows/snake-animation.yml'
       - 'README.md'
 
-env:
-  FORCE_COLOR: 1
-  NODE_ENV: production
-
 jobs:
   generate:
     name: 🎮 Generate Snake Animations
@@ -45,31 +41,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     
-    outputs:
-      generation_time: ${{ steps.stats.outputs.generation_time }}
-      total_contributions: ${{ steps.stats.outputs.total_contributions }}
-    
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          
-      - name: 🎯 Setup Node.js with caching
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          
+
       - name: 📊 Collect GitHub stats
         id: stats
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Buscar estatísticas reais do GitHub
           OWNER="${{ github.repository_owner }}"
           
-          # Contribuições do último ano via API
           CONTRIBS=$(gh api graphql -f query='
             query($userName:String!) {
               user(login: $userName){
@@ -79,62 +63,69 @@ jobs:
                   }
                 }
               }
-            }' -f userName=$OWNER --jq '.data.user.contributionsCollection.contributionCalendar.totalContributions')
+            }' -f userName="$OWNER" --jq '.data.user.contributionsCollection.contributionCalendar.totalContributions' 2>/dev/null || echo "0")
           
-          echo "total_contributions=${CONTRIBS:-0}" >> $GITHUB_OUTPUT
+          echo "total_contributions=${CONTRIBS}" >> $GITHUB_OUTPUT
           echo "generation_time=$(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_OUTPUT
           echo "workflow_run=${{ github.run_number }}" >> $GITHUB_OUTPUT
-          
           echo "✅ Estatísticas coletadas: ${CONTRIBS} contribuições"
-        
+
       - name: 🐍 Generate Matrix Theme
-        if: |
-          github.event.inputs.theme == 'all' || 
-          github.event.inputs.theme == 'matrix' || 
+        if: >
+          github.event.inputs.theme == 'all' ||
+          github.event.inputs.theme == 'matrix' ||
           github.event.inputs.theme == '' ||
-          github.event.inputs.theme == null
+          github.event.inputs.theme == null ||
+          github.event_name == 'schedule' ||
+          github.event_name == 'push'
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
             dist/snake-matrix.svg?palette=github-dark&color_snake=#00ff41&color_dots=#001a00,#003d0d,#006d1a,#00a82d,#39ff14
-          
+
       - name: 🌊 Generate Ocean Theme
-        if: |
-          github.event.inputs.theme == 'all' || 
-          github.event.inputs.theme == 'ocean' || 
+        if: >
+          github.event.inputs.theme == 'all' ||
+          github.event.inputs.theme == 'ocean' ||
           github.event.inputs.theme == '' ||
-          github.event.inputs.theme == null
+          github.event.inputs.theme == null ||
+          github.event_name == 'schedule' ||
+          github.event_name == 'push'
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
             dist/snake-ocean.svg?palette=github-dark&color_snake=#00bfff&color_dots=#001f3f,#003d5c,#0074cc,#3dd5f3,#74f7ff
-            
+
       - name: 🕹️ Generate Retro Theme
-        if: |
-          github.event.inputs.theme == 'all' || 
-          github.event.inputs.theme == 'retro' || 
+        if: >
+          github.event.inputs.theme == 'all' ||
+          github.event.inputs.theme == 'retro' ||
           github.event.inputs.theme == '' ||
-          github.event.inputs.theme == null
+          github.event.inputs.theme == null ||
+          github.event_name == 'schedule' ||
+          github.event_name == 'push'
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
             dist/snake-retro.svg?palette=github-dark&color_snake=#ff6b6b&color_dots=#2d1b69,#5a189a,#7209b7,#f72585,#4cc9f0
-            
+
       - name: ⚡ Generate Neon Theme
-        if: |
-          github.event.inputs.theme == 'all' || 
-          github.event.inputs.theme == 'neon' || 
+        if: >
+          github.event.inputs.theme == 'all' ||
+          github.event.inputs.theme == 'neon' ||
           github.event.inputs.theme == '' ||
-          github.event.inputs.theme == null
+          github.event.inputs.theme == null ||
+          github.event_name == 'schedule' ||
+          github.event_name == 'push'
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
             dist/snake-neon.svg?palette=github-dark&color_snake=#ff0080&color_dots=#0d0221,#460c68,#9a031e,#fb8500,#ffb700
-            
+
       - name: 🌈 Generate Classic Themes
         uses: Platane/snk/svg-only@v3
         with:
@@ -143,152 +134,27 @@ jobs:
             dist/github-snake.svg
             dist/github-snake-dark.svg?palette=github-dark
             dist/github-snake-light.svg?palette=github-light
-            
-      - name: 🎨 Generate Custom Theme (if selected)
+
+      - name: 🎨 Generate Custom Theme
         if: github.event.inputs.theme == 'custom'
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
             dist/snake-custom.svg?palette=github-dark&color_snake=#9333ea&color_dots=#1e1b4b,#4c1d95,#7c3aed,#a78bfa,#c4b5fd
-            
-      - name: 📝 Generate Documentation
-        run: |
-          mkdir -p dist
-          
-          cat > dist/README.md << 'EOF'
-          # 🐍 Snake Animation Collection
-          
-          <div align="center">
-          
-          ![Build Status](https://img.shields.io/github/actions/workflow/status/${{ github.repository }}/snake-animation.yml?style=for-the-badge&logo=github)
-          ![Last Update](https://img.shields.io/badge/Last%20Update-${{ steps.stats.outputs.generation_time }}-blue?style=for-the-badge)
-          ![Contributions](https://img.shields.io/badge/Contributions-${{ steps.stats.outputs.total_contributions }}-green?style=for-the-badge)
-          
-          </div>
-          
-          ## 📊 Generation Info
-          
-          - **Generated:** ${{ steps.stats.outputs.generation_time }}
-          - **Total Contributions:** ${{ steps.stats.outputs.total_contributions }}
-          - **Workflow Run:** #${{ steps.stats.outputs.workflow_run }}
-          - **Repository:** ${{ github.repository }}
-          
-          ## 🎨 Available Themes
-          
-          ### 🕹️ Matrix Theme
-          ```markdown
-          ![Snake Matrix](https://raw.githubusercontent.com/${{ github.repository }}/output/snake-matrix.svg)
-          ```
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="./snake-matrix.svg">
-            <img alt="Matrix Snake" src="./snake-matrix.svg">
-          </picture>
-          
-          ### 🌊 Ocean Theme  
-          ```markdown
-          ![Snake Ocean](https://raw.githubusercontent.com/${{ github.repository }}/output/snake-ocean.svg)
-          ```
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="./snake-ocean.svg">
-            <img alt="Ocean Snake" src="./snake-ocean.svg">
-          </picture>
-          
-          ### 🕹️ Retro Theme
-          ```markdown
-          ![Snake Retro](https://raw.githubusercontent.com/${{ github.repository }}/output/snake-retro.svg)
-          ```
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="./snake-retro.svg">
-            <img alt="Retro Snake" src="./snake-retro.svg">
-          </picture>
-          
-          ### ⚡ Neon Theme
-          ```markdown
-          ![Snake Neon](https://raw.githubusercontent.com/${{ github.repository }}/output/snake-neon.svg)
-          ```
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="./snake-neon.svg">
-            <img alt="Neon Snake" src="./snake-neon.svg">
-          </picture>
-          
-          ### 🌙 Dark Theme (Classic)
-          ```markdown
-          ![Snake Dark](https://raw.githubusercontent.com/${{ github.repository }}/output/github-snake-dark.svg)
-          ```
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="./github-snake-dark.svg">
-            <img alt="Dark Snake" src="./github-snake-dark.svg">
-          </picture>
-          
-          ### ☀️ Light Theme (Classic)
-          ```markdown
-          ![Snake Light](https://raw.githubusercontent.com/${{ github.repository }}/output/github-snake-light.svg)
-          ```
-          <picture>
-            <source media="(prefers-color-scheme: light)" srcset="./github-snake-light.svg">
-            <img alt="Light Snake" src="./github-snake-light.svg">
-          </picture>
-          
-          ## 🚀 How to Use
-          
-          ### In Your README.md
-          
-          ```markdown
-          # Use the theme-aware version
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/${{ github.repository }}/output/github-snake-dark.svg">
-            <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/${{ github.repository }}/output/github-snake-light.svg">
-            <img alt="Snake animation" src="https://raw.githubusercontent.com/${{ github.repository }}/output/github-snake.svg">
-          </picture>
-          ```
-          
-          ### Direct Link (Dark Mode)
-          ```markdown
-          ![Snake animation](https://raw.githubusercontent.com/${{ github.repository }}/output/snake-matrix.svg)
-          ```
-          
-          ## ⚙️ Workflow Features
-          
-          - ✅ Automatic daily generation at midnight UTC
-          - ✅ Manual trigger with theme selection
-          - ✅ Multiple color themes
-          - ✅ Real GitHub contribution stats via API
-          - ✅ Optimized caching for faster builds
-          - ✅ Theme-aware images (dark/light mode)
-          - ✅ Comprehensive documentation
-          
-          ## 📅 Update Schedule
-          
-          Animations are automatically updated daily at 00:00 UTC via GitHub Actions.
-          
-          ---
-          
-          <div align="center">
-          
-          **Made with ❤️ using GitHub Actions** 🤖
-          
-          *Last generated: ${{ steps.stats.outputs.generation_time }}*
-          
-          </div>
-          EOF
-          
-          echo "✅ Documentation generated successfully"
-          
+
       - name: 🔍 Verify generated files
         run: |
           echo "📂 Generated files:"
-          ls -lah dist/
-          
-          # Verificar se os arquivos SVG foram criados
+          ls -lah dist/ || echo "⚠️ dist/ directory is empty or missing"
           for file in dist/*.svg; do
             if [ -f "$file" ]; then
               SIZE=$(wc -c < "$file")
               echo "✅ $(basename $file) - ${SIZE} bytes"
             fi
           done
-          
-      - name: 🚀 Deploy to GitHub Pages
+
+      - name: 🚀 Deploy to output branch
         uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: output
@@ -299,7 +165,7 @@ jobs:
           jekyll: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
       - name: 📢 Generate summary
         if: always()
         run: |
@@ -320,7 +186,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🔗 View Results" >> $GITHUB_STEP_SUMMARY
           echo "Check the [output branch](https://github.com/${{ github.repository }}/tree/output) for all generated animations." >> $GITHUB_STEP_SUMMARY
-          
+
       - name: ❌ Handle failure
         if: failure()
         run: |
